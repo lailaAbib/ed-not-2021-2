@@ -1,3 +1,8 @@
+#NUMERO DE COMPARAÇÕES EM UMA LISTA DE N ELEMENTOS
+#QUANDO UM ELEMENTO EXISTE: POS + 1 COMPARAÇÕES
+# QUANDO UM ELEMENTO NÃO EXISTE: N COMPARAÇÕES
+
+from time import time
 from data.lista_nomes import nomes
 # ALGORITMO DE BUSCA SEQUENCIAL
 
@@ -105,7 +110,21 @@ print(f"Posição do número 6689: {busca_sequencial(primos, 6689)}")
 print(f"Posição do número 4500: {busca_sequencial(primos, 4500)}")
 print(f"Número de elementos da lista: {len(primos)}")
 
-print(f"Posição de FAUSTO: {busca_sequencial(nomes, 'FAUSTO')}")
-print(f"Posição de ZULEICA: {busca_sequencial(nomes, 'ZULEICA')}")
-print(f"Posição de ORKUTILSON: {busca_sequencial(nomes, 'ORKUTILSON')}")
+busca = 'Orkutilson'
 
+hora_ini = time()
+print(f"Posição de FAUSTO: {busca_sequencial(nomes, 'FAUSTO')}")
+hora_fim = time()
+print(f"Tempo gasto procurando FAUSTO: {(hora_fim - hora_ini) * 1000}ms")
+
+hora_ini = time()
+print(f"Posição de ZULEICA: {busca_sequencial(nomes, 'ZULEICA')}")
+hora_fim = time()
+print(f"Tempo gasto procurando ZULEICA: {(hora_fim - hora_ini) * 1000}ms")
+
+hora_ini = time()
+print(f"Posição de LUNISVALDO: {busca_sequencial(nomes, 'LUNISVALDO')}")
+hora_fim = time()
+print(f"Tempo gasto procurando LUNISVALDO: {(hora_fim - hora_ini) * 1000}ms")
+
+print(f"Posição de {busca.upper()}: {busca_sequencial(nomes, busca.upper())}")
