@@ -14,7 +14,12 @@ def merge_sort(lista):
         Função que implementa o algoritmo merge sort usando o
         método RECURSIVO
     """
+
+    # Não podemos zerar as variáveis globais de estatística
+    # dentro da função porque ela é recursiva e resetaria
+    # a contagem a cada chamada
     global comps, divisoes, juncoes
+
     # print(f'Lista recebida: {lista}')
 
     # Só continua se a lista tiver mais de um elemento
@@ -26,7 +31,9 @@ def merge_sort(lista):
     # Gera cópia da primeira metade da lista
     lista_esq = lista[:meio]    # Do início ao meio - 1
     # Gera cópia da segunda metade da lista
-    lista_dir = lista[meio:]    # Do meio ao fim
+    lista_dir = lista[meio:]    # Do meio ao 
+    
+    divisoes += 1
 
     # Chamamos recursivamente a função para continuar
     # repartindo a lista em metades
@@ -53,7 +60,7 @@ def merge_sort(lista):
         else:
             ordenada.append(lista_dir[pos_dir])
             pos_dir += 1
-            comps += 1
+        comps += 1
 
     sobra = None    # A sobra da lista que ficou para trás
 
@@ -64,7 +71,7 @@ def merge_sort(lista):
 
     # print(f'>>>> final ordenada: {ordenada + sobra}')
 
-    # Retornamos a lista final ordenada, composta da ordenada + sobra
+    # Retornamos a lista final ordenada, composta da ordenada + 
     juncoes += 1
     return ordenada + sobra     # "Soma" de duas listas
 
