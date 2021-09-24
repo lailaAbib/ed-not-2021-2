@@ -11,11 +11,11 @@ def m(n, o):
     q = len(n) - 1      # Última posição
       # o que for menor  
     while p <= q:
-        r = (n + o) // 2     # Operador divisão inteira
+        r = (n + o) / 2     # Operador divisão 
         if n[r] == o: 
            return r     # retornar onde o r está
         # 2º caso: Se o é menor que n[r]
         elif o < n[r]: q = r - 1  
         else: p = r + 1    # Decarta a 1ª metade da lista
-    return -1
+        return -1
 
