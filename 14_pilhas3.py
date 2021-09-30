@@ -47,7 +47,7 @@ for pos in range(len(expressao)):
     elif expressao[pos] == "}":
         verif_fechamento("X", pos, analisador.pop())
 
-#
+# Verificando se houve sobra(s) na pilha
 while not analisador.is_empty():
     sobra = analisador.pop()
-    print(f"ERRO: símbolo de abertura {sobra['tipo']} sem símbolo de fechamento correspondente na posição {pos_fecha}")
+    print(f"ERRO: símbolo de abertura {sobra['tipo']} sem símbolo de fechamento correspondente na posição {sobra['pos']}")
