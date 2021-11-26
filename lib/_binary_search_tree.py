@@ -174,16 +174,18 @@ class BinarySearchTree:
         else: return True
 
     """
-        Método PRIVADO para encontrar o nodo de menor valor a partir da raiz fornecida
+        Método PRIVADO para encontrar o nodo de menor valor a partir
+        da raiz fornecida
     """
-
     def __min_node(self, root):
         node = root
         while node is not None and node.left is not None:
             node = node.left
         return node
+
     """
-        Método PRIVADO para encontrar o nodo de maior valor a partir da raiz fornecida
+        Método PRIVADO para encontrar o nodo de maior valor a partir
+        da raiz fornecida
     """
     def __max_node(self, root):
         node = root
@@ -195,103 +197,66 @@ class BinarySearchTree:
         Método público para remoção de um valor da árvore
     """
     def remove(self, val):
-        self.__root = self.__remove_node(val)
+        self.__root = self.__remove_node(self.__root, val)
 
     """
         Método PRIVADO para remoção de um nodo da árvore
     """
     def __remove_node(self, root, val):
 
-        # 1º Caso: árvore vazia 
+        # 1º caso: árvore vazia
         if root is None: return None
 
-        # 2º Caso: o valor a ser removído é MENOR que o valor da raiz
+        # 2º caso: o valor a ser removido é MENOR que o valor da raiz
         # Continua procurando pelo nodo a ser removido pelo lado ESQUERDO
-        if val < root.data:
+        if val < root.data: 
             root.left = self.__remove_node(root.left, val)
             return root
 
-        # 3º Caso: O valor a ser removido é MAIOR que o valor da raiz
+        # 3º caso: o valor a ser removido é MAIOR que o valor da raiz
         # Continua procurando pelo nodo a ser removido pelo lado DIREITO
         if val > root.data:
             root.right = self.__remove_node(root.right, val)
             return root
 
-        # 4º Caso: o valor a ser removido é IGUAL ao valor da raiz
+        # 4º caso: o valor a ser removido é IGUAL ao valor da raiz
         # O nodo a ser removido foi encontrado; agora é necessário
         # determinar o grau do nodo para aplicar o algoritmo de remoção
         # correto para cada grau
 
-        # 4.1: remoção de nodo grau 0
+        # 4.1: remoção de nodo de grau 0
         if root.left is None and root.right is None:
             root = None
             return root
 
-        # 4.2: remoção de nodo de grau 1 com subárvore à ESQUERDA
+        # 4.2: remoção de nodo de grau 1 com subárvore à esquerda
         if root.left is not None and root.right is None:
             root = root.left
             return root
-        
-        # 4.3: remoção  de nodo de grau 1 com subárvore à DIREITA
+
+        # 4.3: remoção do nodo de grau 1 com subárvore à direita
         if root.left is None and root.right is not None:
             root = root.right
             return root
 
-        # 4.4: remoção de nodo de grau 2
+        # 4.4: remoção do nodo de grau 2
 
+        # Precisamos encontrar:
+        # a) O MAIOR nodo da subárvore ESQUERDA; *ou*
+        # b) O MENOR nodo da subárvore DIREITA
 
+        # Nossa opção: usar o maior nodo da subárvore esquerda
+        new_root = self.__max_node(root.left)
+        # Ou: new_root = self.__min_node(root.right)
 
-######################################################################
+        # Copia o valor do nodo encontrado para o nodo que está
+        # sendo "removido"
+        root.data = new_root.data
 
-arvore = BinarySearchTree()
+        # Exclui o valor duplicado que está na subárvore esquerda
+        # (de onde veio o valor de new_root)
+        root.left = self.__remove_node(root.left, new_root.data)
+        # Ou: root.right = self.__remove_node(root.right, new_root.data)
 
-arvore.insert(43)
-arvore.insert(27)
-arvore.insert(64)
-arvore.insert(36)
-arvore.insert(10)
-arvore.insert(0)
+        return root
 
-print(arvore.to_str())
-
-em_ordem = []
-
-def insere_em_ordem(val):
-    em_ordem.append(val)
-
-#arvore.in_order_traversal(insere_em_ordem)
-arvore.in_order_traversal(lambda val: em_ordem.append(val))
-#arvore.in_order_traversal(lambda val: print(val))
-
-print('Percurso em-ordem:', em_ordem)
-
-sumario = BinarySearchTree()
-
-sumario.insert('2')
-sumario.insert('1')
-sumario.insert('3')
-sumario.insert('1.1')
-sumario.insert('3.1')
-sumario.insert('2.1')
-sumario.insert('2.1.1')
-
-em_ordem = []
-sumario.in_order_traversal(lambda val: em_ordem.append(val))
-print('Sumário em-ordem:', em_ordem)
-
-pre_ordem = []
-sumario.pre_order_traversal(lambda val: pre_ordem.append(val))
-print('Sumário pré-ordem:', pre_ordem)
-
-pre_ordem = []
-arvore.pre_order_traversal(lambda val: pre_ordem.append(val))
-print('Árvore pré-ordem:', pre_ordem)
-
-pos_ordem = []
-arvore.post_order_traversal(lambda val: pos_ordem.append(val))
-print('Árvore pós-ordem:', pos_ordem)
-
-existe36 = arvore.exists(36)
-existe51 = arvore.exists(51)
-existe64 = arvore.exists(64)
-print(f'36: {existe36}, 51: {existe51}, 64: {existe64}')
